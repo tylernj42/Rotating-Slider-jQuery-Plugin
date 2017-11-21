@@ -1,5 +1,5 @@
 # Rotating-Slider-jQuery-Plugin
-A rotating slider that uses the Clip-path property to create a circular shape.
+A rotating slider that uses the Clip-path property to create a circular shape.  Note, because Internet Explorer/Edge do not support the Clip-path property, this will not work in those browsers.
 Demo at https://codepen.io/tylernj42/full/vWdRxv/
 
 ## Usage
