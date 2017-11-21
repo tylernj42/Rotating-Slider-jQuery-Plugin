@@ -3,8 +3,8 @@
         var rotatingSlider = {
             init: function(el){
                 this.$slider = $(el);
-                this.$slides = this.$slider.find('ul.slides>li');
-                this.$slidesContainer = this.$slider.find('ul.slides');
+                this.$slidesContainer = this.$slider.children('ul.slides');
+                this.$slides = this.$slidesContainer.children('li');
                 this.$clipPath;
                 this.$directionControls;
                 
@@ -29,12 +29,15 @@
                 this.dragStartPoint;
                 this.dragStartAngle;
                 this.currentlyDragging = false;
+                this.markupIsValid = false;
                 
                 this.validateMarkup();
-                this.renderSlider();
-                this.bindEvents();
-                if(this.settings.autoRotate){
-                    this.startAutoRotate();
+                if(this.markupIsValid){
+                    this.renderSlider();
+                    this.bindEvents();
+                    if(this.settings.autoRotate){
+                        this.startAutoRotate();
+                    }
                 }
             },
             bindEvents: function(){
@@ -69,7 +72,7 @@
                         this.dragStartAngle = this.currentRotationAngle;
                     }
                     if(this.currentlyDragging){
-                        this.currentRotationAngle = this.dragStartAngle - ((this.dragStartPoint - pageX) / 10);
+                        this.currentRotationAngle = this.dragStartAngle - ((this.dragStartPoint - pageX) / this.settings.slideWidth * this.slideAngle);
                         this.$slidesContainer.css('transform', 'translateX(-50%) rotate('+this.currentRotationAngle+'deg)');
                     }
                 }
@@ -203,7 +206,16 @@
                 }
             },
             validateMarkup: function(){
-
+                if(
+                    this.$slider.hasClass('rotating-slider') &&
+                    this.$slidesContainer.length === 1 &&
+                    this.$slides.length >= 2
+                ){
+                    this.markupIsValid = true;
+                }else{
+                    this.$slider.css('display', 'none');
+                    console.log('Markup for Rotating Slider is invalid.');
+                }
             }
         }
 
