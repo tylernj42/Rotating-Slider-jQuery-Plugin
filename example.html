@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rotating Slider jQuery Plugin</title>
+    <link rel="stylesheet" href="rotating-slider.css">
+</head>
+<body>
+    <div class="rotating-slider">
+        <ul class="slides">
+            <li>
+                <div class="inner">
+                    <h2>Actual Rotating Slider</h2>
+                    <p>Built with math and dedication</p>
+                </div>
+            </li>
+            <li>
+                <div class="inner"></div>
+            </li>
+            <li>
+                <div class="inner">
+                    <h2>Hates IE</h2>
+                    <p>Uses clip-path to shape slides</p>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <h2>Easy to use</h2>
+                    <p>Just add list elements in the HTML and set a height and width in the JavaScript Settings</p>
+                    <p><small>Now touch & drag friendly!</small></p>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <h2>I'm not a thief!</h2>
+                    <p>Stock photos from www.pexels.com</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="jquery.rotating-slider.js"></script>
+    <script>
+        $(function(){ 
+            $('.rotating-slider').rotatingSlider();
+        });
+    </script>
+</body>
+</html>
