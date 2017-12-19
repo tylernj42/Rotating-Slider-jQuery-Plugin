@@ -85,6 +85,8 @@
     <script>
         $(function(){ 
             $('.rotating-slider').rotatingSlider({
+                slideHeight : Math.min(360, window.innerWidth -80),
+                slideWidth : Math.min(480, window.innerWidth - 80),
                 afterRotationStart: function(){
                     console.log('Rotating to slide '+($('.rotating-slider .active-slide').index() + 1));
                 }
