@@ -266,7 +266,7 @@
             afterRotationEnd: function(){
                 this.settings.afterRotationEnd();
             },
-        }
+        };
 
         return this.each(function(){
             rotatingSlider.init(this);
