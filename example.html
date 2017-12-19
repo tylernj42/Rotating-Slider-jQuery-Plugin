@@ -4,6 +4,43 @@
     <meta charset="UTF-8">
     <title>Rotating Slider jQuery Plugin</title>
     <link rel="stylesheet" href="rotating-slider.css">
+    <style>
+        /* Demo Styles */
+        @import url(https://fonts.googleapis.com/css?family=Roboto+Slab:300,700);
+        body{
+            background: #333;
+            font-family: 'Roboto Slab', sans-serif;
+            font-weight: 300;
+            overflow: hidden;
+        }
+        .rotating-slider ul.slides li{
+            color: #fff
+        }
+        .rotating-slider ul.slides li:nth-of-type(1){
+            background: #3498db;
+        }
+        .rotating-slider ul.slides li:nth-of-type(2){
+            background: url('http://static.pexels.com/wp-content/uploads/2014/05/car-oldtimer-snow-342-825x550.jpg');
+        }
+        .rotating-slider ul.slides li:nth-of-type(3){
+            background: #e74c3c;
+        }
+        .rotating-slider ul.slides li:nth-of-type(4){
+            background: url('http://static.pexels.com/wp-content/uploads/2014/06/analog-camera-old-olympus-om-10-1528-825x550.jpg');
+        }
+        .rotating-slider ul.slides li:nth-of-type(5){
+            background: #f1c40f;
+        }
+        .rotating-slider ul.slides li:nth-of-type(6){
+            background: url(http://static.pexels.com/wp-content/uploads/2014/06/bridge-city-night-645-827x550.jpg);
+        }
+        .rotating-slider ul.slides li .inner{
+            box-sizing: border-box;
+            padding: 2em;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <div class="rotating-slider">
@@ -31,7 +68,7 @@
                 <div class="inner">
                     <h2>Easy to use</h2>
                     <p>Just add list elements in the HTML and set a height and width in the JavaScript Settings</p>
-                    <p><small>Now touch & drag friendly!</small></p>
+                    <p><small>Now touch &amp; drag friendly!</small></p>
                 </div>
             </li>
             <li>
@@ -47,7 +84,11 @@
     <script src="jquery.rotating-slider.js"></script>
     <script>
         $(function(){ 
-            $('.rotating-slider').rotatingSlider();
+            $('.rotating-slider').rotatingSlider({
+                afterRotationStart: function(){
+                    console.log('Rotating to slide '+($('.rotating-slider .active-slide').index() + 1));
+                }
+            });
         });
     </script>
 </body>

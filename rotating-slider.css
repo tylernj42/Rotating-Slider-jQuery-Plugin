@@ -1,3 +1,6 @@
+body{
+    overflow-x: hidden;
+}
 .rotating-slider{
     margin: 5em auto;
     height: 360px;

@@ -24,15 +24,20 @@ This method accepts a number of options, the defaults are below.
 
 ```
 $('.rotating-slider').rotatingSlider({
-  autoRotate: true,
-  autoRotateInterval: 6000,
-  draggable: true,
-  directionControls: true,
-  directionLeftText: '&lsaquo;',
-  directionRightText: '&rsaquo;',
-  rotationSpeed: 750,
-  slideHeight : 360,
-  slideWidth : 480,
+    autoRotate: true,
+    autoRotateInterval: 6000,
+    draggable: true,
+    directionControls: true,
+    directionLeftText: '&lsaquo;',
+    directionRightText: '&rsaquo;',
+    rotationSpeed: 750,
+    slideHeight: 360,
+    slideWidth: 480,
+    /* Callback Functions */
+    beforeRotationStart: function(){},
+    afterRotationStart: function(){},
+    beforeRotationEnd: function(){},
+    afterRotationEnd: function(){}
 });
 ```
 

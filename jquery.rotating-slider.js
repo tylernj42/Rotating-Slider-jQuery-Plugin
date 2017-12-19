@@ -7,6 +7,9 @@
                 this.$slides = this.$slidesContainer.children('li');
                 this.$clipPath;
                 this.$directionControls;
+                this.$currentSlide;
+                this.$nextSlide;
+                this.$previousSlide;
                 
                 this.settings = $.extend({
                     autoRotate: true,
@@ -16,8 +19,13 @@
                     directionLeftText: '&lsaquo;',
                     directionRightText: '&rsaquo;',
                     rotationSpeed: 750,
-                    slideHeight : 360,
-                    slideWidth : 480,
+                    slideHeight: 360,
+                    slideWidth: 480,
+                    /* Callback Functions */
+                    beforeRotationStart: function(){},
+                    afterRotationStart: function(){},
+                    beforeRotationEnd: function(){},
+                    afterRotationEnd: function(){}
                 }, options);
                 
                 this.slideAngle = 360 / this.$slides.length;
@@ -34,6 +42,7 @@
                 this.validateMarkup();
                 if(this.markupIsValid){
                     this.renderSlider();
+                    this.setCurrentSlide();
                     this.bindEvents();
                     if(this.settings.autoRotate){
                         this.startAutoRotate();
@@ -174,7 +183,11 @@
                 this.rotate();
             },
             rotate: function(){
+                this.beforeRotationStart();
                 this.currentlyRotating = true;
+                this.$slider.addClass('currently-rotating');
+                this.setCurrentSlide();
+
                 if(this.rotateTimeoutId){
                     clearTimeout(this.rotateTimeoutId);
                     this.rotateTimeoutId = false;
@@ -182,9 +195,13 @@
                 
                 this.$slidesContainer.css('transition', 'transform '+(this.settings.rotationSpeed/1000)+'s ease-in-out');
                 this.$slidesContainer.css('transform', 'translateX(-50%) rotate('+this.currentRotationAngle+'deg)');
+
+                this.afterRotationStart();
                 
                 this.rotateTimeoutId = setTimeout(function(){
+                    this.beforeRotationEnd();
                     this.currentlyRotating = false;
+                    this.$slider.removeClass('currently-rotating');
                     this.$slidesContainer.css('transition', 'none');
 
                     /* keep currentRotationAngle between -360 and 360 */
@@ -192,7 +209,25 @@
                         this.currentRotationAngle = this.currentRotationAngle >= 360 ? this.currentRotationAngle - 360 : this.currentRotationAngle + 360;
                         this.$slidesContainer.css('transform', 'translateX(-50%) rotate('+this.currentRotationAngle+'deg)');
                     }
+                    this.afterRotationEnd();
                 }.bind(this), this.settings.rotationSpeed);
+            },
+            setCurrentSlide: function(){
+                var currAngle = this.currentRotationAngle;
+                if(this.currentRotationAngle >= 360 || this.currentRotationAngle <= -360){
+                     currAngle = currAngle >= 360 ? currAngle - 360 : currAngle + 360;
+                }
+                this.$currentSlide = this.$slides.eq(-currAngle / this.slideAngle);
+                this.$nextSlide = (this.$currentSlide.is(':last-child') ? this.$slides.first() : this.$currentSlide.next());
+                this.$previousSlide = (this.$currentSlide.is(':first-child') ? this.$slides.last() : this.$currentSlide.prev());
+
+                this.$slides.removeClass('active-slide');
+                this.$slides.removeClass('next-slide');
+                this.$slides.removeClass('previous-slide');
+
+                this.$currentSlide.addClass('active-slide');
+                this.$nextSlide.addClass('next-slide');
+                this.$previousSlide.addClass('previous-slide');
             },
             startAutoRotate: function(){
                 this.autoRotateIntervalId = setInterval(function(){
@@ -216,7 +251,21 @@
                     this.$slider.css('display', 'none');
                     console.log('Markup for Rotating Slider is invalid.');
                 }
-            }
+            },
+
+            /* Callbacks */
+            beforeRotationStart: function(){
+                this.settings.beforeRotationStart();
+            },
+            afterRotationStart: function(){
+                this.settings.afterRotationStart();
+            },
+            beforeRotationEnd: function(){
+                this.settings.beforeRotationEnd();
+            },
+            afterRotationEnd: function(){
+                this.settings.afterRotationEnd();
+            },
         }
 
         return this.each(function(){
