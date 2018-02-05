@@ -28,7 +28,7 @@
                     afterRotationEnd: function(){}
                 }, options);
                 
-                this.slideAngle = 360 / this.$slides.length;
+                this.slideAngle = Math.round(360 / this.$slides.length);
                 this.currentRotationAngle = 0;
                 this.autoRotateIntervalId = false;
                 this.rotateTimoutId = false;
