@@ -28,7 +28,7 @@
                     afterRotationEnd: function(){}
                 }, options);
                 
-                this.slideAngle = 360 / this.$slides.length;
+                this.slideAngle = Math.ceil(360 / this.$slides.length);
                 this.currentRotationAngle = 0;
                 this.autoRotateIntervalId = false;
                 this.rotateTimoutId = false;
@@ -206,6 +206,7 @@
 
                     /* keep currentRotationAngle between -360 and 360 */
                     if(this.currentRotationAngle >= 360 || this.currentRotationAngle <= -360){
+                        this.currentRotationAngle = Math.round(this.currentRotationAngle / 360) * 360
                         this.currentRotationAngle = this.currentRotationAngle >= 360 ? this.currentRotationAngle - 360 : this.currentRotationAngle + 360;
                         this.$slidesContainer.css('transform', 'translateX(-50%) rotate('+this.currentRotationAngle+'deg)');
                     }
@@ -215,6 +216,7 @@
             setCurrentSlide: function(){
                 var currAngle = this.currentRotationAngle;
                 if(this.currentRotationAngle >= 360 || this.currentRotationAngle <= -360){
+                    currAngle = Math.round(currAngle / 360) * 360
                      currAngle = currAngle >= 360 ? currAngle - 360 : currAngle + 360;
                 }
                 this.$currentSlide = this.$slides.eq(-currAngle / this.slideAngle);
